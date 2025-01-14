@@ -32,8 +32,8 @@ class BemfaHttp:
             FETCH_TOPICS_URL.format(uid=self._uid),
         ) as res:
             res.raise_for_status()
-            res_dict = await res.json(content_type="text/html", encoding="utf-8")
-            if res_dict["code"] == 111 and res_dict["status"] == "get ok":
+            res_dict = await res.json(content_type="application/json", encoding="utf-8")
+            if res_dict["code"] == 0 and res_dict["message"] == "OK":
                 return {
                     topic["topic_id"]: topic["v_name"]
                     for topic in res_dict["data"]
