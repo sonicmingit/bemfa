@@ -33,11 +33,11 @@ class BemfaHttp:
         ) as res:
             res.raise_for_status()
             res_dict = await res.json(content_type="application/json", encoding="utf-8")
-            if res_dict["code"] == 0 and res_dict["message"] == "OK":
+            if res_dict["code"] == 0 and res_dict["message"] == "OK" and res_dict["data"] is not None:
                 return {
-                    topic["topic_id"]: topic["v_name"]
+                    topic["topic"]: topic["name"]
                     for topic in res_dict["data"]
-                    if topic["topic_id"].startswith(TOPIC_PREFIX)
+                    if topic["topic"].startswith(TOPIC_PREFIX)
                 }
             return {}
 
